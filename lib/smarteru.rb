@@ -1,6 +1,6 @@
 require 'rest-client'
-require 'libxml'
-require 'xmlhasher'
+require 'nori'
+require 'nokogiri'
 
 require 'smarteru/error'
 require 'smarteru/client'
@@ -10,5 +10,5 @@ require 'smarteru/resources/users'
 
 module Smarteru
   API_HOST = 'api.smarteru.com'
-  API_VERSION = "apiv2"
+  API_VERSION = 'apiv2'
 end

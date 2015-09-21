@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.require_paths = [ 'lib' ]
 
   s.add_dependency('rest-client')
-  s.add_dependency('libxml-ruby')
-  s.add_dependency('xmlhasher')
+  s.add_dependency('nokogiri')
+  s.add_dependency('nori')
 
   s.add_development_dependency('rdoc')
   s.add_development_dependency('rake')

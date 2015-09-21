@@ -8,16 +8,13 @@ module Smarteru
     # * +resp+ - RestClient response from the API
     def initialize(res, opts = {})
       @data = res
-      opts[:parser] ||= XmlHasher::Parser.new(
-        snakecase:         true,
-        ignore_namespaces: true,
-        string_keys:       false)
+      @parser = opts[:parser] || default_parser
       @opts = opts
     end
 
     # Hash representation of response data
     def hash
-      @hash ||= opts[:parser].parse(data.to_s.gsub(/\<!\[CDATA\[([^\]]+)\]\]\>/) {$1})
+      @hash ||= @parser.parse(data.to_s)
     end
 
     # Return true/false based on the API response status
@@ -34,6 +31,15 @@ module Smarteru
     def error
       errors = hash[:smarter_u][:errors]
       errors.is_a?(Hash) ? errors : nil
+    end
+
+    private
+
+    def default_parser
+      Nori.new(
+        advanced_typecasting: false,
+        convert_tags_to: lambda { |tag| tag.snakecase.to_sym }
+      )
     end
   end
 end
